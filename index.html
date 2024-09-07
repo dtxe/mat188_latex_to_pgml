@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Converter</title>
+    <script>
+        class ClipboardFusionHelper {
+            static replaceMathSymbols(input) {
+                let pattern = /\$([^$]+)\$/g;
+                let replacement = '($1)';
+                return input.replace(pattern, replacement);
+            }
+
+            static removeMathcite(input) {
+                input = input.replace(/\\MathCite\{[a-zA-Z0-9]+\}\[([^\]]+)\]/g, '$1');
+                input = input.replace(/\\MathCite\{([a-zA-Z0-9]+)\}[^\[]/g, '$1');
+                return input;
+            }
+
+            static otherReplacements(input) {
+                input = input.replace(/\\bbR/g, '\\mathbb{R}');
+                input = input.replace(/\\spn/g, '\\text{span}');
+                input = input.replace(/\\image/g, '\\text{im}');
+                return input;
+            }
+
+            static processText(text) {
+                text = this.replaceMathSymbols(text);
+                text = this.removeMathcite(text);
+                text = this.otherReplacements(text);
+                text = "$BR $BR $BR $BBOLD LS: $EBOLD\r\n" + text;
+                return text;
+            }
+        }
+
+        function convertText() {
+            const inputText = document.getElementById("inputText").value;
+            const outputText = ClipboardFusionHelper.processText(inputText);
+            document.getElementById("outputText").value = outputText;
+        }
+
+        async function copyToClipboard() {
+            const outputText = document.getElementById("outputText").value;
+
+            try {
+                await navigator.clipboard.writeText(outputText);
+            } catch (err) {
+                console.error("Failed to copy: ", err);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Text Converter</h1>
+
+    <label for="inputText">Input Text:</label><br>
+    <textarea id="inputText" rows="10" cols="50"></textarea><br><br>
+
+    <button onclick="convertText()">Convert</button><br><br>
+
+    <label for="outputText">Output Text (Click to Copy):</label><br>
+    <textarea id="outputText" rows="10" cols="50" readonly onclick="copyToClipboard()"></textarea>
+
+</body>
+</html>
