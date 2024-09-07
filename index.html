@@ -32,6 +32,7 @@
                 let lsnum = "LS";
                 if (match) {
                     lsnum = match[1];
+                    text = text.replace(lsPattern, '');
                 }
 
                 text = this.replaceMathSymbols(text);
