@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Converter</title>
+    <title>LaTeX to PGML</title>
     <script>
         class ClipboardFusionHelper {
             static replaceMathSymbols(input) {
@@ -26,10 +26,18 @@
             }
 
             static processText(text) {
+                const lsPattern = /^(LS\d+):/;
+                const match = text.match(lsPattern);
+
+                let lsnum = "LS";
+                if (match) {
+                    lsnum = match[1];
+                }
+
                 text = this.replaceMathSymbols(text);
                 text = this.removeMathcite(text);
                 text = this.otherReplacements(text);
-                text = "$BR $BR $BR $BBOLD LS: $EBOLD\n" + text;
+                text = `$BR $BR $BR $BBOLD ${lsnum}: $EBOLD\n` + text;
                 return text;
             }
         }
@@ -86,7 +94,7 @@
     </style>
 </head>
 <body>
-    <h1>Text Converter</h1>
+    <h1>LaTeX to PGML</h1>
 
     <label for="inputText">Input Text:</label><br>
     <textarea id="inputText" rows="10" cols="150" onfocus="selectAllText()"></textarea><br><br>
