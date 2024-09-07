@@ -50,17 +50,25 @@
             }
         }
     </script>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        textarea {
+            font-family: monospace;
+        }
+    </style>
 </head>
 <body>
     <h1>Text Converter</h1>
 
     <label for="inputText">Input Text:</label><br>
-    <textarea id="inputText" rows="10" cols="50"></textarea><br><br>
+    <textarea id="inputText" rows="10" cols="150"></textarea><br><br>
 
     <button onclick="convertText()">Convert</button><br><br>
 
     <label for="outputText">Output Text (Click to Copy):</label><br>
-    <textarea id="outputText" rows="10" cols="50" readonly onclick="copyToClipboard()"></textarea>
+    <textarea id="outputText" rows="10" cols="150" readonly onclick="copyToClipboard()"></textarea>
 
 </body>
 </html>
