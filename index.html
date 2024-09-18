@@ -8,13 +8,13 @@
         class ClipboardFusionHelper {
             static replaceMathSymbols(input) {
                 let pattern = /\$([^$]+)\$/g;
-                let replacement = '($1)';
+                let replacement = '\\($1\\)';
                 return input.replace(pattern, replacement);
             }
 
             static removeMathcite(input) {
-                input = input.replace(/\\MathCite\{[a-zA-Z0-9]+\}\[([^\]]+)\]/g, '$1 ');
-                input = input.replace(/\\MathCite\{([a-zA-Z0-9]+)\}[^\[]/g, '$1 ');
+                input = input.replace(/\\MathCite\{[a-zA-Z0-9]+\}\[([^\]]+)\]/gi, '$1 ');
+                input = input.replace(/\\MathCite\{([a-zA-Z0-9]+)\}[^\[]/gi, '$1 ');
                 return input;
             }
 
